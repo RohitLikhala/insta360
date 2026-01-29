@@ -17,6 +17,193 @@
             color: #f5f5f7;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.15s ease-out;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-sparkle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            animation: sparkle 1s ease-out forwards;
+        }
+        
+        @keyframes sparkle {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 40px;
+        }
+        
+        .navbar-logo {
+            font-size: 22px;
+            font-weight: 600;
+            color: #f5f5f7;
+        }
+        
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .navbar-link {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+        
+        .navbar-link:hover {
+            opacity: 0.7;
+        }
+        
+        .navbar-buy {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: transform 0.3s;
+            animation: gradient-shift 3s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .navbar-buy:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Section Navigation */
+        .section-nav {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .section-nav.visible {
+            opacity: 1;
+        }
+        
+        .section-nav-item {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .section-nav-item.active {
+            background: #f5f5f7;
+            transform: scale(1.5);
+        }
+        
+        .section-nav-item:hover::after {
+            content: attr(data-label);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Sticky Action Bar */
+        .sticky-action-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 998;
+        }
+        
+        .sticky-action-bar.visible {
+            transform: translateY(0);
+        }
+        
+        .sticky-action-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .sticky-action-bar-price {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .sticky-action-bar-info {
+            font-size: 14px;
+            color: #a1a1a6;
+        }
+        
+        .sticky-action-bar-actions {
+            display: flex;
+            gap: 15px;
         }
         
         /* Hero Section */
@@ -28,7 +215,7 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            padding: 40px 20px;
+            padding: 120px 20px 60px;
             background: radial-gradient(ellipse at center, #1d1d1f 0%, #000 70%);
         }
         
@@ -57,9 +244,35 @@
             font-size: clamp(21px, 3vw, 28px);
             font-weight: 400;
             color: #a1a1a6;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.4s forwards;
+        }
+        
+        .hero-benefits {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+        }
+        
+        .hero-benefit {
+            text-align: center;
+            max-width: 200px;
+        }
+        
+        .hero-benefit-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .hero-benefit-text {
+            font-size: 15px;
+            color: #f5f5f7;
+            font-weight: 500;
         }
         
         .hero-cta {
@@ -69,42 +282,50 @@
             flex-wrap: wrap;
             margin-bottom: 60px;
             opacity: 0;
-            animation: fadeInUp 1s ease-out 0.6s forwards;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
         }
         
         .btn {
-            padding: 12px 22px;
+            padding: 14px 28px;
             font-size: 17px;
             border-radius: 980px;
             text-decoration: none;
             font-weight: 400;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
         
         .btn-primary {
-            background: #0071e3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             color: #fff;
+            background-size: 200% 200%;
+            animation: gradient-shift 4s ease infinite;
         }
         
         .btn-primary:hover {
-            background: #0077ed;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
         
         .btn-secondary {
-            color: #2997ff;
-            border: 1px solid #2997ff;
+            color: #f5f5f7;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
         }
         
         .btn-secondary:hover {
-            background: rgba(41, 151, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
         
         .hero-image {
             width: 100%;
             max-width: 900px;
-            margin: 60px auto 0;
+            margin: 0 auto;
             opacity: 0;
-            animation: fadeInScale 1.2s ease-out 0.8s forwards;
+            animation: fadeInScale 1.2s ease-out 1s forwards;
+            transition: transform 0.3s ease-out;
         }
         
         @keyframes fadeInScale {
@@ -124,70 +345,35 @@
             filter: drop-shadow(0 20px 80px rgba(255, 255, 255, 0.1));
         }
         
-        /* Highlight Cards */
-        .highlights {
-            padding: 80px 20px;
+        /* Feature Groups */
+        .feature-group {
+            padding: 100px 20px;
             max-width: 1400px;
             margin: 0 auto;
+            scroll-margin-top: 80px;
         }
         
-        .highlights-title {
+        .feature-group-title {
             font-size: clamp(32px, 5vw, 48px);
             font-weight: 600;
             text-align: center;
-            margin-bottom: 60px;
-            letter-spacing: -0.01em;
-        }
-        
-        .highlights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .highlight-card {
-            background: #1d1d1f;
-            border-radius: 28px;
-            padding: 50px 40px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .highlight-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: all 0.8s ease;
-        }
-        
-        .highlight-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .highlight-icon {
-            font-size: 56px;
             margin-bottom: 20px;
-        }
-        
-        .highlight-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 15px;
             letter-spacing: -0.01em;
         }
         
-        .highlight-text {
-            font-size: 17px;
+        .feature-group-subtitle {
+            text-align: center;
+            font-size: 21px;
             color: #a1a1a6;
-            line-height: 1.5;
+            margin-bottom: 80px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         /* Feature Section */
         .feature {
-            padding: 120px 20px;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 80px 0;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 80px;
@@ -210,33 +396,23 @@
             direction: ltr;
         }
         
-        .feature-content h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #86868b;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 15px;
-        }
-        
         .feature-content h2 {
-            font-size: clamp(32px, 5vw, 56px);
+            font-size: clamp(28px, 4vw, 40px);
             font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             letter-spacing: -0.02em;
             line-height: 1.1;
         }
         
         .feature-content p {
-            font-size: 21px;
+            font-size: 19px;
             line-height: 1.5;
             color: #a1a1a6;
-            margin-bottom: 20px;
         }
         
         .feature-visual {
             position: relative;
-            height: 500px;
+            height: 450px;
         }
         
         .feature-visual img {
@@ -244,57 +420,20 @@
             height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 20px 60px rgba(255, 255, 255, 0.08));
+            transition: transform 1s ease-out;
         }
         
-        /* Stats Section */
-        .stats {
+        .feature.visible .feature-visual img {
+            transform: scale(1.05) rotateY(5deg);
+        }
+        
+        /* Use Case Cards */
+        .use-cases {
             padding: 100px 20px;
-            background: #1d1d1f;
-            border-radius: 28px;
-            margin: 80px 20px;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
+            background: #0a0a0a;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 60px;
-            text-align: center;
-        }
-        
-        .stat-item {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .stat-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: all 0.8s ease;
-        }
-        
-        .stat-value {
-            font-size: 56px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: -0.02em;
-        }
-        
-        .stat-label {
-            font-size: 17px;
-            color: #a1a1a6;
-        }
-        
-        /* Tech Specs */
-        .tech-specs {
-            padding: 120px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .tech-specs h2 {
+        .use-cases-title {
             font-size: clamp(32px, 5vw, 48px);
             font-weight: 600;
             text-align: center;
@@ -302,31 +441,151 @@
             letter-spacing: -0.01em;
         }
         
-        .spec-table {
+        .use-cases-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .use-case-card {
             background: #1d1d1f;
-            border-radius: 28px;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .use-case-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+        
+        .use-case-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .use-case-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+        }
+        
+        .use-case-content {
+            padding: 30px;
+        }
+        
+        .use-case-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .use-case-desc {
+            font-size: 17px;
+            color: #a1a1a6;
+            line-height: 1.5;
+        }
+        
+        /* Comparison Section */
+        .comparison {
+            padding: 100px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .comparison-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: -0.01em;
+        }
+        
+        .comparison-table {
+            background: #1d1d1f;
+            border-radius: 20px;
             overflow: hidden;
         }
         
-        .spec-row {
+        .comparison-row {
             display: grid;
-            grid-template-columns: 1fr 2fr;
-            padding: 24px 40px;
+            grid-template-columns: 2fr 1fr 1fr;
+            padding: 20px 30px;
             border-bottom: 1px solid #2d2d2d;
+            align-items: center;
         }
         
-        .spec-row:last-child {
+        .comparison-row:first-child {
+            background: #0a0a0a;
+            font-weight: 600;
+        }
+        
+        .comparison-row:last-child {
             border-bottom: none;
         }
         
-        .spec-label {
+        .comparison-feature {
             font-size: 17px;
-            color: #a1a1a6;
         }
         
-        .spec-value {
+        .comparison-value {
             font-size: 17px;
-            color: #f5f5f7;
+            text-align: center;
+        }
+        
+        .comparison-highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        /* Trust Indicators */
+        .trust-section {
+            padding: 80px 20px;
+            background: #0a0a0a;
+        }
+        
+        .trust-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+        
+        .trust-item {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .trust-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+        
+        .trust-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .trust-title {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .trust-desc {
+            font-size: 15px;
+            color: #a1a1a6;
         }
         
         /* Footer */
@@ -334,7 +593,7 @@
             padding: 100px 20px 60px;
             text-align: center;
             border-top: 1px solid #2d2d2d;
-            margin-top: 120px;
+            margin-top: 80px;
         }
         
         .footer h2 {
@@ -375,14 +634,35 @@
                 direction: ltr;
             }
             
-            .feature-visual {
-                height: 400px;
+            .section-nav {
+                display: none;
             }
         }
         
         @media (max-width: 734px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .navbar.scrolled {
+                padding: 12px 20px;
+            }
+            
+            .navbar-links {
+                gap: 15px;
+            }
+            
+            .navbar-link:not(.navbar-buy) {
+                display: none;
+            }
+            
             .hero {
-                padding: 20px;
+                padding: 100px 20px 40px;
+            }
+            
+            .hero-benefits {
+                flex-direction: column;
+                gap: 25px;
             }
             
             .hero-cta {
@@ -396,19 +676,22 @@
                 width: 100%;
             }
             
-            .highlights-grid {
-                grid-template-columns: 1fr;
+            .sticky-action-bar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
             }
             
-            .spec-row {
-                grid-template-columns: 1fr;
-                gap: 10px;
-                padding: 20px;
+            .sticky-action-bar-left {
+                flex-direction: column;
+                gap: 5px;
+                align-items: center;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 40px;
+            .comparison-row {
+                grid-template-columns: 1.5fr 1fr 1fr;
+                padding: 15px 20px;
+                font-size: 15px;
             }
         }
         
@@ -426,170 +709,282 @@
     </style>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-logo">Insta360 X5</div>
+        <div class="navbar-links">
+            <a href="#capture" class="navbar-link">Features</a>
+            <a href="#use-cases" class="navbar-link">Use Cases</a>
+            <a href="#compare" class="navbar-link">Compare</a>
+            <a href="#" class="navbar-buy">Buy Now</a>
+        </div>
+    </nav>
+
+    <!-- Section Navigation -->
+    <div class="section-nav">
+        <div class="section-nav-item" data-label="Capture" data-target="capture"></div>
+        <div class="section-nav-item" data-label="Intelligence" data-target="intelligence"></div>
+        <div class="section-nav-item" data-label="Durability" data-target="durability"></div>
+        <div class="section-nav-item" data-label="Use Cases" data-target="use-cases"></div>
+    </div>
+
+    <!-- Sticky Action Bar -->
+    <div class="sticky-action-bar">
+        <div class="sticky-action-bar-left">
+            <div class="sticky-action-bar-price">$549.99</div>
+            <div class="sticky-action-bar-info">Free shipping • 1-year warranty</div>
+        </div>
+        <div class="sticky-action-bar-actions">
+            <a href="#" class="btn btn-primary">Buy Now</a>
+            <a href="#" class="btn btn-secondary">Watch Intro</a>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
         <h1 class="hero-title">Insta360 X5</h1>
-        <p class="hero-subtitle">Every angle. Every moment. Impossibly smooth.</p>
-        <div class="hero-cta">
-            <a href="#" class="btn btn-primary">Buy</a>
-            <a href="#" class="btn btn-secondary">Learn more</a>
+        <p class="hero-subtitle">The ultimate 360° action camera</p>
+        
+        <div class="hero-benefits">
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">🎥</div>
+                <div class="hero-benefit-text">8K 360° Video</div>
+            </div>
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">⚡</div>
+                <div class="hero-benefit-text">AI-Powered Editing</div>
+            </div>
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">🌊</div>
+                <div class="hero-benefit-text">Waterproof 49ft</div>
+            </div>
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">🔄</div>
+                <div class="hero-benefit-text">FlowState Smooth</div>
+            </div>
         </div>
-        <div class="hero-image">
+        
+        <div class="hero-cta">
+            <a href="#" class="btn btn-primary">Explore Features</a>
+            <a href="#" class="btn btn-secondary">Watch Film</a>
+        </div>
+        
+        <div class="hero-image" id="hero-camera">
             <img src="images/insta360.png" alt="Insta360 X5">
         </div>
     </section>
 
-    <!-- Highlights Section -->
-    <section class="highlights">
-        <h2 class="highlights-title">Get the highlights</h2>
-        <div class="highlights-grid">
-            <div class="highlight-card fade-in">
-                <div class="highlight-icon">🎥</div>
-                <h3 class="highlight-title">8K 360° Video</h3>
-                <p class="highlight-text">Capture stunning detail from every angle in breathtaking 8K resolution.</p>
+    <!-- Capture & Image Quality -->
+    <section class="feature-group" id="capture">
+        <h2 class="feature-group-title">Capture & Image Quality</h2>
+        <p class="feature-group-subtitle">Revolutionary sensors and processing power capture every detail in stunning clarity</p>
+        
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>8K 360° perfection</h2>
+                <p>Emmy award-winning image quality captures the complete sphere around you. Dual ultra-wide lenses with 144% larger sensors deliver incredible detail and dynamic range.</p>
             </div>
-            <div class="highlight-card fade-in">
-                <div class="highlight-icon">🔄</div>
-                <h3 class="highlight-title">FlowState</h3>
-                <p class="highlight-text">Gimbal-smooth stabilization without the bulk. Always steady, always stable.</p>
+            <div class="feature-visual">
+                <img src="images/side.png" alt="Insta360 X5">
             </div>
-            <div class="highlight-card fade-in">
-                <div class="highlight-icon">💧</div>
-                <h3 class="highlight-title">Waterproof</h3>
-                <p class="highlight-text">Dive to 49 feet without a case. Built for any adventure.</p>
+        </div>
+
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>PureVideo in any light</h2>
+                <p>Advanced AI noise reduction turns night into day. Shoot confidently from sunrise to midnight with exceptional low-light performance.</p>
             </div>
-            <div class="highlight-card fade-in">
-                <div class="highlight-icon">🧠</div>
-                <h3 class="highlight-title">AI Editing</h3>
-                <p class="highlight-text">Smart reframing and one-tap edits transform your footage instantly.</p>
+            <div class="feature-visual">
+                <img src="images/insta360day.png" alt="Insta360 X5">
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item fade-in">
-                <div class="stat-value">8K</div>
-                <div class="stat-label">Video resolution</div>
+    <!-- Stabilization & Intelligence -->
+    <section class="feature-group" id="intelligence">
+        <h2 class="feature-group-title">Stabilization & Intelligence</h2>
+        <p class="feature-group-subtitle">Professional results without the complexity</p>
+        
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>FlowState stabilization</h2>
+                <p>Gimbal-smooth footage without the bulk. Advanced algorithms eliminate shake while 360° Horizon Lock keeps your world level, even during extreme action.</p>
             </div>
-            <div class="stat-item fade-in">
-                <div class="stat-value">72MP</div>
-                <div class="stat-label">Photo quality</div>
+            <div class="feature-visual">
+                <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
             </div>
-            <div class="stat-item fade-in">
-                <div class="stat-value">185min</div>
-                <div class="stat-label">Battery life</div>
+        </div>
+
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>AI edits your story</h2>
+                <p>Intelligent tracking follows the action automatically. One-tap reframing transforms 360° footage into perfect social-ready clips.</p>
             </div>
-            <div class="stat-item fade-in">
-                <div class="stat-value">49ft</div>
-                <div class="stat-label">Waterproof depth</div>
+            <div class="feature-visual">
+                <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
+            </div>
+        </div>
+
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>Invisible selfie stick magic</h2>
+                <p>The selfie stick disappears completely, creating impossible third-person perspectives. Cinematic shots that look like they were filmed by a professional crew.</p>
+            </div>
+            <div class="feature-visual">
+                <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
             </div>
         </div>
     </section>
 
-    <!-- Feature: PureVideo -->
-    <section class="feature fade-in">
-        <div class="feature-content">
-            <h3>PureVideo</h3>
-            <h2>Perfection in any light</h2>
-            <p>Advanced AI noise reduction and dynamic range optimization deliver crystal-clear footage from sunrise to midnight. Triple AI chip processing ensures every frame is perfect.</p>
+    <!-- Durability & Build -->
+    <section class="feature-group" id="durability">
+        <h2 class="feature-group-title">Built for Adventure</h2>
+        <p class="feature-group-subtitle">Rugged design that goes wherever you do</p>
+        
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>Dive without limits</h2>
+                <p>Waterproof to 49 feet without a case. Shockproof and dustproof construction survives the harshest conditions.</p>
+            </div>
+            <div class="feature-visual">
+                <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
+            </div>
         </div>
-        <div class="feature-visual">
-            <img src="images/insta360day.png" alt="Insta360 X5">
+
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>Replaceable lens system</h2>
+                <p>Revolutionary design lets you swap damaged lenses in seconds. No more expensive repairs or downtime.</p>
+            </div>
+            <div class="feature-visual">
+                <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
+            </div>
+        </div>
+
+        <div class="feature fade-in">
+            <div class="feature-content">
+                <h2>All-day battery</h2>
+                <p>Record up to 185 minutes on a single charge. Fast charging gets you to 80% in just 20 minutes.</p>
+            </div>
+            <div class="feature-visual">
+                <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
+            </div>
         </div>
     </section>
 
-    <!-- Feature: 360 Capture -->
-    <section class="feature fade-in">
-        <div class="feature-content">
-            <h3>360° Capture</h3>
-            <h2>Shoot first. Point later.</h2>
-            <p>Dual ultra-wide lenses capture everything around you. Reframe your shots in post with complete creative freedom. The invisible selfie stick creates impossible third-person views.</p>
-        </div>
-        <div class="feature-visual">
-            <img src="images/side.png" alt="Insta360 X5">
+    <!-- Use Cases -->
+    <section class="use-cases" id="use-cases">
+        <h2 class="use-cases-title">Built for every adventure</h2>
+        <div class="use-cases-grid">
+            <div class="use-case-card fade-in">
+                <div class="use-case-image">🏍️</div>
+                <div class="use-case-content">
+                    <h3 class="use-case-title">Motorcycling</h3>
+                    <p class="use-case-desc">Capture every turn with FlowState stabilization. Relive your rides with cinematic smoothness.</p>
+                </div>
+            </div>
+            <div class="use-case-card fade-in">
+                <div class="use-case-image">🌍</div>
+                <div class="use-case-content">
+                    <h3 class="use-case-title">Travel</h3>
+                    <p class="use-case-desc">Never miss a moment. 360° capture means you can reframe the perfect shot later.</p>
+                </div>
+            </div>
+            <div class="use-case-card fade-in">
+                <div class="use-case-image">🏄</div>
+                <div class="use-case-content">
+                    <h3 class="use-case-title">Water Sports</h3>
+                    <p class="use-case-desc">Dive to 49 feet without a case. Capture underwater adventures in crystal clarity.</p>
+                </div>
+            </div>
+            <div class="use-case-card fade-in">
+                <div class="use-case-image">🌃</div>
+                <div class="use-case-content">
+                    <h3 class="use-case-title">Night Shooting</h3>
+                    <p class="use-case-desc">PureVideo technology makes night look like day. Stunning low-light performance.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Feature: FlowState -->
-    <section class="feature fade-in">
-        <div class="feature-content">
-            <h3>FlowState</h3>
-            <h2>Impossibly smooth</h2>
-            <p>Professional-grade stabilization keeps your footage silky smooth in any condition. 360° Horizon Lock ensures level shots even during backflips and barrel rolls.</p>
-        </div>
-        <div class="feature-visual">
-            <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
+    <!-- Comparison -->
+    <section class="comparison" id="compare">
+        <h2 class="comparison-title">X5 vs X4</h2>
+        <div class="comparison-table">
+            <div class="comparison-row">
+                <div class="comparison-feature">Feature</div>
+                <div class="comparison-value">X5</div>
+                <div class="comparison-value">X4</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-feature">Video Resolution</div>
+                <div class="comparison-value comparison-highlight">8K30</div>
+                <div class="comparison-value">8K30</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-feature">Sensor Size</div>
+                <div class="comparison-value comparison-highlight">1/1.28"</div>
+                <div class="comparison-value">1/2"</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-feature">Low Light Performance</div>
+                <div class="comparison-value comparison-highlight">144% larger</div>
+                <div class="comparison-value">Standard</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-feature">Battery Life</div>
+                <div class="comparison-value comparison-highlight">185 min</div>
+                <div class="comparison-value">135 min</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-feature">Replaceable Lenses</div>
+                <div class="comparison-value comparison-highlight">✓</div>
+                <div class="comparison-value">✗</div>
+            </div>
+            <div class="comparison-row">
+                <div class="comparison-feature">AI Processing</div>
+                <div class="comparison-value comparison-highlight">Triple chip</div>
+                <div class="comparison-value">Dual chip</div>
+            </div>
         </div>
     </section>
 
-    <!-- Feature: Durability -->
-    <section class="feature fade-in">
-        <div class="feature-content">
-            <h3>Built to Last</h3>
-            <h2>Adventure ready</h2>
-            <p>Revolutionary replaceable lens design means damaged lenses swap in seconds. Waterproof to 49 feet without a case, with 100% improved drop resistance over X4.</p>
-        </div>
-        <div class="feature-visual">
-            <img src="https://cdn.insta360.com/assets/storage/20250424/49a6e79e651fc1c8fb3d97c5dadb7ed0/x5_black_png_standard.png" alt="Insta360 X5">
-        </div>
-    </section>
-
-    <!-- Tech Specs -->
-    <section class="tech-specs">
-        <h2>Tech Specs</h2>
-        <div class="spec-table">
-            <div class="spec-row">
-                <div class="spec-label">Video</div>
-                <div class="spec-value">8K30 / 5.7K60 / 4K120 fps</div>
+    <!-- Trust Indicators -->
+    <section class="trust-section">
+        <div class="trust-grid">
+            <div class="trust-item fade-in">
+                <div class="trust-icon">📦</div>
+                <div class="trust-title">Free Shipping</div>
+                <div class="trust-desc">On all orders worldwide</div>
             </div>
-            <div class="spec-row">
-                <div class="spec-label">Photo</div>
-                <div class="spec-value">72MP (48MP per lens)</div>
+            <div class="trust-item fade-in">
+                <div class="trust-icon">🛡️</div>
+                <div class="trust-title">1-Year Warranty</div>
+                <div class="trust-desc">Full coverage included</div>
             </div>
-            <div class="spec-row">
-                <div class="spec-label">Sensors</div>
-                <div class="spec-value">Dual 1/1.28" sensors, F2.0 aperture</div>
+            <div class="trust-item fade-in">
+                <div class="trust-icon">🔄</div>
+                <div class="trust-title">30-Day Returns</div>
+                <div class="trust-desc">No questions asked</div>
             </div>
-            <div class="spec-row">
-                <div class="spec-label">Processing</div>
-                <div class="spec-value">Triple AI chip system, 5nm AI chip + 2 Pro Imaging</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Stabilization</div>
-                <div class="spec-value">FlowState, 360° Horizon Lock, Active HDR 60fps</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Battery</div>
-                <div class="spec-value">2400mAh, up to 185 min recording</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Waterproof</div>
-                <div class="spec-value">49ft (15m) without case</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Connectivity</div>
-                <div class="spec-value">Wi-Fi 6E, Bluetooth 5.0, USB-C 3.0</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Audio</div>
-                <div class="spec-value">4 audio modes, multi-layer wind guard</div>
-            </div>
-            <div class="spec-row">
-                <div class="spec-label">Storage</div>
-                <div class="spec-value">microSD up to 1TB (sold separately)</div>
+            <div class="trust-item fade-in">
+                <div class="trust-icon">👥</div>
+                <div class="trust-title">2M+ Users</div>
+                <div class="trust-desc">Join the community</div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <section class="footer">
-        <h2>Redefine your reality</h2>
+        <h2>Ready to capture everything?</h2>
         <p>The most advanced 360° action camera.</p>
         <div class="footer-cta">
-            <a href="#" class="btn btn-primary">Buy - $549.99</a>
-            <a href="#" class="btn btn-secondary">Compare models</a>
+            <a href="#" class="btn btn-primary">Buy Now - $549.99</a>
+            <a href="#" class="btn btn-secondary">Find a Retailer</a>
         </div>
         <div class="footer-links">
             © 2025 Insta360. All rights reserved.
@@ -597,43 +992,134 @@
     </section>
 
     <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Create sparkle effect occasionally
+            if (Math.random() > 0.95) {
+                createSparkle(e.clientX, e.clientY);
+            }
+        });
+        
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'cursor-sparkle';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+        
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX - 20 + 'px';
+            cursor.style.top = cursorY - 20 + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Section navigation
+        const sectionNav = document.querySelector('.section-nav');
+        const sectionNavItems = document.querySelectorAll('.section-nav-item');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 800) {
+                sectionNav.classList.add('visible');
+            } else {
+                sectionNav.classList.remove('visible');
+            }
+            
+            // Update active section
+            const sections = document.querySelectorAll('.feature-group, .use-cases');
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 200 && rect.bottom >= 200) {
+                    sectionNavItems.forEach(item => item.classList.remove('active'));
+                    if (sectionNavItems[index]) {
+                        sectionNavItems[index].classList.add('active');
+                    }
+                }
+            });
+        });
+        
+        // Section nav click
+        sectionNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const target = document.getElementById(item.dataset.target);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Sticky action bar
+        const stickyBar = document.querySelector('.sticky-action-bar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 1200) {
+                stickyBar.classList.add('visible');
+            } else {
+                stickyBar.classList.remove('visible');
+            }
+        });
+        
         // Intersection Observer for scroll animations
         const observerOptions = {
             threshold: 0.15,
             rootMargin: '0px 0px -100px 0px'
         };
-
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    // Add staggered delay for grid items
-                    if (entry.target.parentElement.classList.contains('highlights-grid') ||
-                        entry.target.parentElement.classList.contains('stats-grid')) {
-                        setTimeout(() => {
-                            entry.target.classList.add('visible');
-                        }, index * 100);
-                    } else {
+                    setTimeout(() => {
                         entry.target.classList.add('visible');
-                    }
+                    }, index * 100);
                 }
             });
         }, observerOptions);
-
-        // Observe all fade-in elements
+        
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
-
-        // Smooth scroll for anchor links
+        
+        // Hero camera parallax
+        const heroCamera = document.getElementById('hero-camera');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroHeight = window.innerHeight;
+            
+            if (scrolled < heroHeight) {
+                const scale = 1 + (scrolled / heroHeight) * 0.1;
+                const rotate = (scrolled / heroHeight) * 10;
+                heroCamera.style.transform = `scale(${scale}) rotateY(${rotate}deg)`;
+            }
+        });
+        
+        // Smooth scroll for all links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
