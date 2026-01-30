@@ -725,6 +725,86 @@
             flex-shrink: 0;
         }
 
+        /* ------------------
+   1. HERO SECTION CSS
+   ------------------ */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 120px 20px 60px;
+    background: #000;  /* CHANGED: was radial-gradient */
+    overflow: hidden;  /* ADDED */
+}
+
+/* ADDED: Hero background video */
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+    z-index: 0;
+}
+
+/* ADDED: Hero video overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 70%);
+    z-index: 1;
+}
+
+/* ADDED: Position all hero content above video */
+.hero > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* ------------------------
+   2. USE CASE CARDS CSS
+   ------------------------ */
+
+.use-case-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    position: relative;  /* ADDED */
+    overflow: hidden;    /* ADDED */
+}
+
+/* ADDED: Video styling for use case cards */
+.use-case-image video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* ADDED: Icon overlay styling */
+.use-case-image-icon {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
     </style>
 </head>
 <body>
@@ -763,7 +843,50 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+
+    <!-- Hero Section -->
+<section class="hero">
+    <!-- ADDED: Background video -->
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="https://player.vimeo.com/external/372759407.sd.mp4?s=fa88a0b3b1d0f8b3c4c50b9c9a5b5c5c5c5c5c5c&profile_id=165" type="video/mp4">
+    </video>
+    <!-- ADDED: Video overlay -->
+    <div class="hero-overlay"></div>
+    
+    <h1 class="hero-title">Insta360 X5</h1>
+    <p class="hero-subtitle">The ultimate 360° action camera</p>
+
+    <div class="hero-benefits">
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">🎥</div>
+                <div class="hero-benefit-text">8K 360° Video</div>
+            </div>
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">⚡</div>
+                <div class="hero-benefit-text">AI-Powered Editing</div>
+            </div>
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">🌊</div>
+                <div class="hero-benefit-text">Waterproof 49ft</div>
+            </div>
+            <div class="hero-benefit">
+                <div class="hero-benefit-icon">🔄</div>
+                <div class="hero-benefit-text">FlowState Smooth</div>
+            </div>
+        </div>
+        
+        <div class="hero-cta">
+            <a href="#" class="btn btn-primary">Explore Features</a>
+            <a href="#" class="btn btn-secondary">Watch Film</a>
+        </div>
+        
+        <div class="hero-image" id="hero-camera">
+            <img src="images/insta360.png" alt="Insta360 X5">
+        </div>
+    <!-- ... rest of hero content ... -->
+</section>
+    
+    <!-- <section class="hero">
         <h1 class="hero-title">Insta360 X5</h1>
         <p class="hero-subtitle">The ultimate 360° action camera</p>
         
@@ -794,7 +917,7 @@
         <div class="hero-image" id="hero-camera">
             <img src="images/insta360.png" alt="Insta360 X5">
         </div>
-    </section>
+    </section> -->
 
     <!-- Capture & Image Quality -->
     <section class="feature-group" id="capture">
